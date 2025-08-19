@@ -7,9 +7,9 @@ import Zoom from "@mui/material/Zoom";
 import Alert from "@mui/material/Alert";
 import { useForm } from "react-hook-form";
 import Typography from "@mui/material/Typography";
-import { toast } from "react-toastify";
 import { API_ROOT } from "~/utils/constants";
 import { authorizedAxiosInstance } from "../utils/authorizedAxios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const {
@@ -17,15 +17,30 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
   const submitLogIn = async (data) => {
-    // console.log("submit login: ", data);
     const res = await authorizedAxiosInstance.post(
       `${API_ROOT}/v1/users/login`,
       data
     );
-    // console.log(res.data);
-    toast.success(res.data?.message);
+    const userInfo = {
+      id: res.data.id,
+      email: res.data.email,
+    };
+
+    // localStorage
+    localStorage.setItem("accessToken", res.data.accessToken);
+    localStorage.setItem("refreshToken", res.data.refreshToken);
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
+
+    // sessionStorage
+    sessionStorage.setItem("accessToken: ", res.data.accessToken);
+    sessionStorage.setItem("refreshToken: ", res.data.refreshToken);
+    sessionStorage.setItem("userInfo: ", JSON.stringify(userInfo));
+
+    // điều hướng tới Dashboard khi login thành công
+    navigate("/dashboard");
   };
 
   return (

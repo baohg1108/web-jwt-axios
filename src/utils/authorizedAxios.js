@@ -8,11 +8,37 @@ let authorizedAxiosInstance = axios.create();
 authorizedAxiosInstance.defaults.timeout = 100 * 10 * 10;
 
 // cho phép axios tự động đính kèm và gửi cookie trong mỗi req
-authorizedAxiosInstance.defaults.withCredential = true;
+// cookies
+authorizedAxiosInstance.defaults.withCredentials = true;
 
 // add new req interceptors: can thiệp vào giữa req
+// localStorage
+// authorizedAxiosInstance.interceptors.request.use(
+//   (config) => {
+//     // lấy accessToken thì localStorage vào đính kèm vào header
+//     // định nghĩa token dành cho xác thực và ủy quyền
+//     const accessToken = localStorage.getItem("accessToken");
+
+//     if (accessToken) {
+//       config.headers.Authorization = `Bearer ${accessToken}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
+
+// sessionStorage
 authorizedAxiosInstance.interceptors.request.use(
   (config) => {
+    // lấy accessToken thì localStorage vào đính kèm vào header
+    // định nghĩa token dành cho xác thực và ủy quyền
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
     return config;
   },
   (error) => {
@@ -34,4 +60,4 @@ authorizedAxiosInstance.interceptors.response.use(
   }
 );
 
-export default authorizedAxiosInstance;
+export { authorizedAxiosInstance };
