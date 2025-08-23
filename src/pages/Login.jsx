@@ -30,14 +30,14 @@ function Login() {
     };
 
     // localStorage
-    // localStorage.setItem("accessToken", res.data.accessToken);
-    // localStorage.setItem("refreshToken", res.data.refreshToken);
+    localStorage.setItem("accessToken", res.data.accessToken);
+    localStorage.setItem("refreshToken", res.data.refreshToken);
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
 
     // sessionStorage
-    sessionStorage.setItem("accessToken: ", res.data.accessToken);
-    sessionStorage.setItem("refreshToken: ", res.data.refreshToken);
-    sessionStorage.setItem("userInfo: ", JSON.stringify(userInfo));
+    // sessionStorage.setItem("accessToken: ", res.data.accessToken);
+    // sessionStorage.setItem("refreshToken: ", res.data.refreshToken);
+    // sessionStorage.setItem("userInfo: ", JSON.stringify(userInfo));
 
     // điều hướng tới Dashboard khi login thành công
     navigate("/dashboard");
